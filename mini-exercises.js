@@ -184,3 +184,202 @@ function isPrime(num){
 }
 
 showPrimes(10);
+
+
+// objects
+// const circle = {
+//     radius: 1,
+//     location: {
+//         x: 1,
+//         y: 1
+//     },
+//     isVisible: true,
+//     draw: function() {
+//         console.log('draw');
+//     }
+// };
+
+// ========= factory function
+// definition the method in one place
+// camel notation
+// refactor code. delete location and isVisible for now
+
+// function createCircle(radius){
+//     return {
+//         radius,
+
+//         draw(){  // you can drop the function key word in an object
+//             console.log('draw')
+//         }
+//     };
+// }
+// // const circle1 = createCircle(1);
+// console.log(circle1); // displays the object
+// // factory function you call a function and in the function you return a new object
+
+
+// ======== Constructor Function
+// create a function to construct or create an object
+// Pascal Notation- when the first letter of the word is capitalized like below
+// intialize the object with the 'this' keyword
+
+// function Circle(radius){
+//     this.radius = radius; // adding the radius property and setting it to the parameter
+//     this. draw = function(){
+//         console.log('draw')
+//     }   // adding a function method
+//     // return this;  is what the new keyword is doing. using new you don't ave to do that
+// }
+
+//const circle = new Circle(1);
+// new creates an empty js object ---> const x = {}
+// next it will point what the this keyword is refering to the new object
+// finally it will return this new object from the function
+
+// in constructor function you use the new operator and instead of returning
+// an object we use the this keyword.
+// this is used in java and C sharp
+
+//======= Dyanmic Naturee of objects
+// adding properties to an object
+
+// const circle = { // the const is the circle variable that can't be changed, but the contents can
+//     radius: 1
+// };
+
+// circle.color = 'yellow'; // object.property = 'value'
+// circle.draw = function(){} // adding a function method
+
+// // deleting propeties
+// delete circle.color;
+// delete circle.draw;
+
+//======== Enumerating Properties of an object
+
+// const circle = {
+//     radius: 1,
+//     draw(){
+//         console.log('draw');
+//     }
+// };
+
+// // use for seeing properties in an object
+// for (let key in circle)
+//     console.log(key) // you get radius and draw
+//     console.log(key, circle[key]) // get the property and value
+// // error
+// for (let key of circle)
+//     console.log(key); // error because for of can only be used on arrays and maps
+//     // things that are iterable
+
+// // how to fix the error
+// // you can use a for of loop if you create an array within it
+// for(let key of Object.keys[circle])
+//     console.log(key);
+//     // Object.keys[circle] --> object is a constructor function
+//     // keys return  string array that contains the properties and methods
+//     // itreturns the names of the enumerable propertiesand methods of an object
+//     // [circle] is refering to the oject
+// for(let entries of Object.entries[circle])
+//     console.log(entries);
+//     // returns each key value pair as an array
+
+
+// // to see if a given property or method exists
+// if ('property' in object) console.log('yes');
+
+// //========= Cloning an object
+// // get the properties in an oject and copy them
+// // copying th above object into the const another
+// const another = {}; // first set it to an empty object
+// for(let key in circle) // iterate through the circle object
+// another[key] = circle[key]
+// // another[key] ---> is the 'radius'
+// console.log(another);
+
+// // instead of using the code above use the object.assign method
+// const another = object.assign({}, circle);
+// takes all the properties in the circle and assigns them to an empty object
+// same as above, but cleaner
+// in the {} you can add another property
+
+// another way to clone an object
+//const other = { ...circle }; // ... takes all the properties and method in an object and puts it into a new object
+
+// ========= Garage Collection
+// find variable and const that aren't used an throws it away
+
+
+// ========= String object
+// string primitive
+const message = 'hi';
+// message.property or message.method // wraps it in a string object
+
+// string object
+//const another = new String('hi');
+
+// ========= Template Literals
+// recap
+//      object literals: {}
+//      boolean literal: true, false
+//      string: '', ""
+//      template literall ``
+
+// you can write it in back ticks the way you want to see the output
+const another = `This is my
+first message`;
+
+// you can add any variables or expresssions dynamically by placing them in the placeholder ${}
+const name1 = 'John';
+const message1 = `hi, ${name1},`
+
+// ========= Date object
+const now = new Date();
+const date1 = new Date('may 11 2018 09:00') // js Date to search for formats provided under MDN dateString
+const date2 = new Date(2018, 4, 11, 9);
+// they have get and set methods
+now.get // getting the information
+now.set // setting the date
+
+
+// Create an address object with 3 properties
+//     street
+//     city
+//     zipcode
+// then create a function called showAddress that takes an address object
+// and displays all the properties along with the value
+
+const address = {
+	street: '123 Javascript ln',
+	city: 'San Antonio',
+	zipCode: 78257
+}
+function showAddress(address){
+	for(let key in address)
+		console.log(key, address[key]);
+}
+showAddress(address);
+
+
+// write address object in a factory function and constructor function
+
+// factory function
+
+function factoryAddress(street, city, zipcode){
+	return {
+		street,
+		city,
+		zipcode,
+	};
+}
+const address1 = factoryAddress('a', 'bb', 'ccc');
+console.log(address1);
+// constructor function
+
+// function ConstructorAdress(street, city, zipcode){
+//     this.street = street;
+//     this.city = city;
+//     this.zipCode = zipcode;
+// }
+// const address2 = new ConstructorAdress('aa', 'b', 'cc');
+// console.log(address2);
