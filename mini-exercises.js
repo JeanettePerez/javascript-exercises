@@ -376,10 +376,412 @@ const address1 = factoryAddress('a', 'bb', 'ccc');
 console.log(address1);
 // constructor function
 
-// function ConstructorAdress(street, city, zipcode){
+// function ConstructorAddress(street, city, zipcode){
 //     this.street = street;
 //     this.city = city;
 //     this.zipCode = zipcode;
 // }
 // const address2 = new ConstructorAdress('aa', 'b', 'cc');
 // console.log(address2);
+
+
+// Object equaity
+// create two function
+// function 1 is called areEqual that passes the two addresses as arguments
+// check if object is equal
+// function 2 areSame with the two addresses as argument
+// to see if they are referncing the same object
+const address2 = new ConstructorAdress('aa', 'b', 'cc');
+const address3 = new ConstructorAdress('aa', 'b', 'cc');
+const address4 = address2;
+console.log(areEqual(address2, address3));
+console.log(areSame(address2, address3));
+console.log(areSame(address2, address4));
+
+function ConstructorAdress(street, city, zipcode){
+	this.street = street;
+	this.city = city;
+	this.zipCode = zipcode;
+}
+function areEqual(address2, address3){
+	return address2.street === address3.street &&
+		address2.city === address3.city &&
+		address2.zipCode === address3.zipCode;
+}
+
+
+function areSame(address2, address3){
+	return address2 === address3;
+}
+
+//========= Blog post object
+// build an object with the following properties
+//          title
+//          body
+//          author
+//          views
+//          comments (author, body) comments has two properties
+//          isLive
+
+// const blogPost = {
+//     title: 'a',
+//     body: 'b',
+//     author: 'c',
+//     views: 10,
+//     comments: [
+//         { author: 'aa', body: 'bb' },
+//         { author: 'aa', body: 'bb' }
+//     ],
+//     isLive: true
+// };
+
+// console.log(blogPost);
+
+// building the object aove into a constructor function
+function Blog(title, body, author){
+	this.title = title;
+	this.body = body;
+	this.author = author;
+	this.views = 0;
+	this.comments = [],
+		this.isLive = true
+}
+
+const blog = new Blog('a', 'b', 'c');
+console.log(blog);
+
+const priceRange = [
+	{ label: '$', tooltip: 'Inexpensive', minPerPerson: 0, maxPerPerson: 10 },
+	{ label: '$$', tooltip: 'Moderate', minPerPerson: 11, maxPerPerson: 20 },
+	{ label: '$$$', tooltip: 'Expensive', minPerPerson: 21, maxPerPerson: 50 }
+];
+
+console.log(priceRange);
+
+// array lesson
+
+// adding elements
+
+//  const numbers = [3,4];
+//  numbers.push(5,6); // add to the end
+
+//  numbers.unshift(4,5); // add to the beginning
+
+//  numbers.splice(2, 0, 'a', 'b'); //go to a position and add new elements or remove elements
+//  // the first parameter is the starting index, second is how many to delete,
+//  // the 3rd is what you want to add
+//   console.log(numbers);
+
+// ========== finding elements (primitives)
+
+//   const numbers = [1,2,3,4];
+
+//   numbers.indexOf(1)// return the index of the given element.
+//   numbers.lastIndexOf(1) // gives you the last index of the given number if there were two of the same number
+//   // will return -1 is the given number doesn't exist
+
+//   numbers.includes(1) // returns true if the number is in the array
+// all 3 have the ability to have two parameters (start index, from index)
+
+//========= finding elements (reference types)
+
+const courses = [
+	{ id:1, name: 'a'},
+	{ id:2, name: 'b'},
+];
+
+// when you have an array with reference types. you will use the find method
+const course = courses.find(function(course){
+	return course.name === 'a';
+});
+console.log(course); // returns the first element that matches if
+// element doesnt exist it will return undefined
+// to find the index of the element that matches use findIndex instead
+
+// ========= arrow functions
+// refactor the above code
+// const course = courses.find(course =>  course.name === 'a');
+// finding a course with the name equal to 'a'
+
+// ========= removing Elements
+// const numbers = [1,2,3,4];
+
+//numbers.pop(); // removing last element from the end
+//numbers.shift(); // removing the element from the beginning
+
+// numbers.splice(2,1); // (deleting 3) removing from the middle. pass the index
+// of the element then the number of elements we want to delete
+
+// ========== Emptying an array
+// reassign to new array
+// let numbers = [1,2,3,4];
+
+// === solution 1
+// this works if nothing is pointing to the numbers array
+// if theres no refernces to the original array
+
+// numbers = [];
+
+// console.log(numbers);
+
+// === solution 2
+// removes all elements. preferred solution
+
+// numbers.length = 0;
+
+// === solution 3
+// go to a given position and remove one or more elements
+// numbers.splice(0, numbers.length);
+
+// === solution 4
+// put it in a loop. not recommended pretty noisy
+//while (numbers.length > 0)
+//  numbers.pop();
+
+// ========= Combining and Slicing Arrays
+const first = [1,2,3];
+const second = [4,5,6];
+
+// const combined = first.concat(second); // returns the first followed by the second storing it in a new variable
+
+
+//const slice = combined.slice();
+
+// first way is to set the start index and the end index so it will copy the middle
+// set the start and it will copy what is behind it
+// dont set anything and it will copy the whole thing
+
+// ========= The Spread Operator
+// instead of using the concat method we use the bottom to refactor the const combined above
+// const combined = [...first, ...second];
+
+// the above method you are declaring an array then adding individual elements
+// of the first and second array
+// gives you more flexibility to add an element like below
+const combined = [...first, 'a', ...second, 'b'];
+
+console.log(combined);
+
+// refactoring the slice method into ES6
+const copy = [...combined];
+console.log(copy);
+
+// ========= iterating an array
+const numbers2 = [1,2,3];
+
+// === for of loop
+for(let number of numbers2)
+	console.log(number); // displays the elements of the array
+
+// === forEach ES6 if you need an index
+numbers2.forEach((number, index) => console.log(index, number));
+
+// ========= Joining Arrays
+const numbers3 = [1,2,3];
+const joined = numbers3.join(','); // wanting to joing them with a ,
+
+// split is used when you want to take a string and make it an array
+const message2 = 'this is my firt message';
+const parts = message2.split(' ');
+console.log(parts);
+const combinedString = parts.join('-'); //method is used when building url slot
+console.log(combinedString);
+
+// ========= Sorting Arrays
+const numbers = [2,3,1];
+numbers.sort(); // converts each elements to string then sorts elements to an array
+
+numbers.reverse(); // reverses the array
+console.log(numbers);
+
+const courses2 = [
+	{id:1, name: 'node.js'},
+	{id:2, name: 'javascript'},
+];
+// want to sort array by name of courses so javascript is first
+
+courses2.sort(function(a,b){
+	// a <b => -1
+	// a > b => 1
+	// a === b => 0
+	const nameA = a.name.toUpperCase();
+	const nameB = b.name.toUpperCase();
+	if(nameA < nameB) return -1;
+	if(nameA > nameB) return 1;
+	return 0;
+});
+console.log(courses2);
+// ascii(american standard code informtion interchang) table
+// each character has a numeric representation so capitalization matters
+// in order to keep away from case sensitivity you can do toUppercase or toLowerCase
+
+// ========= Testing the elements of an array
+const numbertests = [1,2,3];
+
+// check and see if all numbers are positive
+// every() checks if every element matches the criteria
+
+// const allPositive = numbers.every(function(value){
+//     return value >= 0;
+// }); // .every has 3 parameters (value, index, array)
+// when calling methid as soon as it finds an element that
+// doesnt match the search will terminate
+
+// you can also use .some to check if there is at least one element
+const atLeastOnePositive = numbers.every(function(value){
+	return value >= 0;
+});
+
+// ========= Filtering an Array
+// how to filter an array based on a search criteria
+
+//const filterNumbers = [1, -1, 2, 3];
+
+//want to return only positive numbers
+
+//const filtered = filterNumbers.filter(n => n >= 0); // loop through and execute callback function to display the correct value
+// number where number is greater than or equal to 0 [1,2,3]
+//console.log(filtered);
+// in real world application you use an array of objects
+
+// ========= Mapping an Array
+// you can map each item to something else
+
+const mapNumbers = [1,-1,2,3];
+
+const filtered = mapNumbers.filter(n => n >= 0);
+
+const items = filtered.map(n => '<li>' + n + '</li>');
+
+const html = '<ul>' + items.join('') + '</ul>'; // makes it into a string
+
+console.log(html);
+
+// mapping number to object property
+// const mapNumbers = [1,-1,2,3];
+
+// const filtered = mapNumbers.filter(n => n >= 0);
+
+// const items = filtered.map(n => ({ value: n }) );
+
+//  when you put the object inside parathesis the arrow function
+//  doesnt read it as a call back function
+// console.log(items);
+
+// refactoring and chaining with map and filter
+// take away the const declaration of filtered because it is only used once
+// calling the map method on the result of the filter method
+// putting the methods on separte lines and declaring the results in a const
+// const items = mapNumbers
+//    .filter(n => n >= 0)
+//    .map(n => ({ value: n }));
+//
+// console.log(items);
+
+// ========= Reducing an Array
+const reduceNumbers = [1, -1, 2, 3];
+// calculating the sum of number in the array
+// reduce method is like calculating the total cost in a shopping cart
+
+// doing it the long way
+// step 1: declare variable and intialize it to 0
+// step 2: loop over the array get each element or number and add it to sum
+// step 3: display sum on the console
+
+
+let sumReduce = 0; // step1
+for(let number of reduceNumbers) // step2
+	sumReduce += number; //adding the numbers to the sum
+
+console.log(sumReduce);
+
+// refactoring it to the reduce method
+// reduce all the elements in the array to a single value
+// method take a call back function with two parameters
+// accumulator and currentValue
+// accumulator is like a sum: step1
+// currentValue will be set to one element in the array: step2
+// in each call you want to get the current value and add it to the
+// accumalator
+
+// const sumRefactored = reduceNumbers.reduce((accumulator, currentValue) => {
+//     return accumulator + currentValue;
+// }, 0); // 0 to intialize the accumalator step1
+// console.log(sumRefactored);
+
+// refactored again
+// take away the zero and the accumalator will start with the 1st number
+// in the array. taking away one step for the computer to analyze
+// take away the return and {} since it's just doing one calculation
+
+const sumRefactored = reduceNumbers.reduce(
+	(accumulator, currentValue) => accumulator + currentValue
+);
+console.log(sumRefactored);
+
+// ========= Array exercises
+
+// === Array From Range
+const rangeNumbers = arrayFromRange(-10, -4);
+
+console.log(rangeNumbers);
+function arrayFromRange(min, max){
+	const output = []; //set to an empty array so the output is an array
+	for(let i = min; i <= max; i++ )   // need a for loop to generate numbers from min and max
+		output.push(i); // taking the output and adding it to the end of the array
+	return output;
+};
+
+// === Includes
+// create a function called includes that takes in an array and a search element
+// if you have the search element it shold return true if not it should return false
+const includeNumbers = [1,2,3,4];
+
+console.log(includes(includeNumbers, 1));
+
+function includes(array, searchElement){
+	for (let element of array)
+		if(element === searchElement)
+			return true;
+	return false;
+};
+
+// === except
+// create a function called except that takes in an array
+// excludes a value from the the array
+const eNumbers = [1,2,3,4];
+
+const outputExclude = except(eNumbers, [1]);
+console.log(outputExclude);
+
+function except(array, excluded){
+	const outputExclude = [];
+	for (let element of array)
+		if(!excluded.includes(element))
+			outputExclude.push(element);
+	return outputExclude;
+}
+
+// === Moving an element
+// using the function move to move a element in a array
+// using 3 parameters array, index, offset.
+
+const moveNumbers = [1,2,3,4];
+
+const moveOuput = move(moveNumbers, 0, 1);
+console.log(moveOuput);
+
+function move(array, index, offset){
+	const position = index + offset;
+	if(position >= array.length || position < 0){
+		console.error('invalid offset');
+		return;
+	}
+
+	const moveOuput = [...array]; // declare a moveOuput set it to a new array and pass the original array by spreader
+	const element = moveOuput.splice(index, 1)[0];// remove an element from an array
+	// splicing the moveOutput and passing in an index and removing one element
+	// next need to add it back to the array
+	moveOuput.splice(position, 0, element); // index plus the offset, deleting nothing from the element
+	return moveOuput;
+}
