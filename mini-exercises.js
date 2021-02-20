@@ -785,3 +785,77 @@ function move(array, index, offset){
 	moveOuput.splice(position, 0, element); // index plus the offset, deleting nothing from the element
 	return moveOuput;
 }
+
+// === count occurrences
+// create a function called countOccurences takes in an array and a searchElement
+// returns the number of times the search element has occured in the array
+const countNumbers = [1,2,3,4,1];
+const count = countOccurences(countNumbers, 1);
+console.log(count);
+function countOccurences(array, searchElement){
+//  let count = 0;
+//  for(let element of array)
+//     if(element === searchElement)
+//         count++;
+//     return count;
+	return array.reduce((accumalator, currentValue) => {
+		const occurrences = (currentValue === searchElement) ? 1 : 0;
+		console.log(accumalator, currentValue, searchElement);
+		return accumalator + occurrences;
+	},0);
+// if the currentValue is equal to the searchElement increment by 1 if not increment b 0
+// return the accumalator plus how many times the searchElement is equal to the current value
+}
+
+// === Get Max
+// Create a function called getMax that takes in an array and returns
+// the largest number in that array
+const maxNumbers1 = [1,2,3,4];
+const maxN = getMax(maxNumbers1);
+console.log(maxN);
+
+function getMax(array){
+	if(array.length === 0) return undefined;
+
+	// let max = array[0];  // like intializing the zero
+
+	// for(let i = 1; i < array.length; i++)
+	//   if(array[i] > max)  // the cal in the body of the reduce
+	//     max = array[i];
+
+	// return max;
+
+	return array.reduce((accumalator, currentValue) =>
+		(currentValue > accumalator) ? currentValue : accumalator);
+
+}
+
+// === movies
+//
+const movies = [
+	{ title: 'a', year: 2018, rating: 4.5},
+	{ title: 'b', year: 2018, rating: 4.7},
+	{ title: 'c', year: 2018, rating: 3},
+	{ title: 'd', year: 2017, rating: 4.5},
+];
+
+
+// write code to get
+//         all the movies in 2018 with rating > 4
+//         sort them by rating in descending order
+//         only pick their title property to diplay on the console
+//          should see 'b' followed by 'a' on the console
+
+
+
+
+// let year = movies[movie].year
+
+
+const titles = movies
+	.filter(m => m.year === 2018 && m.rating >= 4) // returns a new array
+	.sort((a,b) => a.rating - b.rating) // sort that array. use a comparison function when working with objects
+	.reverse() // reverse it to display in descending order
+	.map(m => m.title) // to pick only their title
+
+console.log(titles);
