@@ -859,3 +859,313 @@ const titles = movies
 	.map(m => m.title) // to pick only their title
 
 console.log(titles);
+
+// for(let movie in movies)
+//    if (movies[movie].year === 2018 && movies[movie].rating > 4)
+// console.log(movies[movie].title);
+
+// ========= Function Declaration vs Expression
+// === Declaration
+// can be called before the function
+walk();
+function walk(){
+	console.log('walk');
+}
+// === anonymous function Expression
+// a named function expression you would just add walk after function
+// have to add ; at the end
+let run = function() {
+	console.log('run');
+};
+run();
+
+// ========= Hoisting
+// the process of moving function declarations to the top of the file
+// it is a default behavior
+
+// ========= Arguments
+function sum(){
+	let total = 0;
+	for(let value of arguments)
+		total += value;
+	return total;
+}
+console.log(sum(1,2,3,4,5,10));
+
+// === The Rest Operator
+// if you want function with a varying number of parameters
+// you can use the rest operator by adding ...args
+// the rest operator will take all arguments and put them in an array
+function sumRest(...args){
+	let total = 0;
+	return args.reduce((a,b) => a + b);
+}
+console.log(sumRest(1,2,3,4,5,10));
+
+// using the function to get the total cost of items in a shopping cart
+// having a discount factor
+// ...prices is passing the price of all the items in a shopping cart
+// the rest operator has to be the last formal parameter
+// have the discount parameter then the rest of the parameters with ...prices
+function sumCart(discount, ...prices){
+	const total = prices.reduce((a,b) => a + b);
+	return total * (1 - discount);
+}
+console.log(sumCart(0.1, 20, 30 ));
+
+// ========= Default Parameters
+// when you want to supply default values to parameter of function
+// write a function for calculating total interest
+
+
+function interest(principle, rate = 3.5, years = 5){
+	// rate = rate || 3.5; // if rate is a truty value or 3.5
+	// years = years || 5;
+	return principle * rate / 100 * years;
+}
+
+console.log(interest(10000)); // 1750
+
+// ========= Getters and Setters
+// getters => access properties in an object
+// setters => change (mutate) them
+
+
+
+const person = {
+	firstName: 'Mosh',
+	lastName: 'Hamedani',
+	get fullName() {
+		return `${person.firstName} ${person.lastName}`
+	},
+	set fullName(value) {
+		const parts = value.split(' '); // splitting the value by a space
+		this.firstName = parts[0];
+		this.lastName = parts[1];
+	}
+};
+
+person.fullName = 'john smith' // name is the value
+// place get to be able to get the property
+// in order to set it from outside use set
+// wanting to get a persons full name
+console.log(person); // showing the person object with the new changes
+console.log(person.fullName); //firstName and lastName changed to john smith
+
+// ========= try and catch
+// adding error handling to make sure the values coming in are correct
+// if(typeOf value !== 'string')
+//      throw new Error('Value is not a String.');
+const person1 = {
+	firstName: 'Mosh',
+	lastName: 'Hamedani',
+	get fullName() {
+		return `${person.firstName} ${person.lastName}`
+	},
+	set fullName(value) {
+		if(typeof value !== 'string')
+			throw new Error('Value is not a string.') // if this error is caught it will jump out and go to the catch
+
+		const parts = value.split(' '); // splitting the value by a space
+		if(parts.length !== 2)
+			throw new Error('Enter a first and lat name') // if trying to add empty string
+		this.firstName = parts[0];
+		this.lastName = parts[1];
+	}
+};
+try{ // list as many here to see
+	person1.fullName = '';
+}
+catch(e) { // the new Error object above. catches the exception and does something with it
+	// alert(e); // not best practice for alerting the user. proper way is to display label
+}
+console.log(person1);
+
+// ========= local vs global scope
+const messageScope = 'hi';
+console.log(messageScope);
+
+// declaring variables with let and const the scope is limited to the block in where they are defined
+// global scope is dclaring a variable ouside of code blocks
+// that variable can be accessed in any function
+// avoid declaring a varibale globally it will lead to bugs because if the vairable
+// name is delared inside a code block it will take presidence leading to confusing code
+
+// ========= let vs var
+// var => function-scoped
+// ES6: let, const => block-scoped
+
+// second issue is the global variables
+// var attaches variable to the window object.
+// if using a 3rd party library if the library has a variable of the same name
+// as something declared in var the 3rd party library will over ride your variable
+// adding function to module to avoid adding it to the window object
+
+// ========= this keyword
+
+// this keyword references the object that is executing the current function
+// first rule:
+// if function is apart of the object we call it a method if true we refernce the object
+// second rule:
+// function not part of an object thiskeyword references the global object.
+// window object in browsers and global in node
+// first rule example
+const video = {
+	title: 'a',
+	play() {
+		console.log(this); // since play is a method in the object. this references the object itself
+	}
+};
+
+video.play();
+// second rule example
+function playVideo(){
+	console.log(this); // gives you the window object
+}
+playVideo();
+
+// using constructor function
+function Video(title) {
+	this.title = title; // adding the property to the new object
+	console.log(this); //
+}
+
+const v = new Video('b'); // creates a new empty object
+// using the new operator this keyword will reference an empty object
+
+//
+
+const video2 = {
+	title: 'a',
+	tags: ['a', 'b', 'c'],
+	showTags() {
+		this.tags.forEach(function(tag) { // can call the forEach because tages is an array
+			console.log(this.title, tag); // inside  the call back function and not a method
+		}, this); // this is referencing show tags
+	}
+};
+
+video2.showTags(); // will display the tags
+
+// to get the titles infront of the tag set this as an argument in the
+// forEach loop and within the callback function call this.title to
+// grab the title property.
+
+// ========= changing this
+// to change the value of this
+// not reccommended, but often used by others
+const videoChange = {
+	title: 'a',
+	tags: ['a', 'b', 'c'],
+	showTags() {
+		const self = this; // referencing the videoChange object
+		this.tags.forEach(function(tag) {
+			console.log(self.title, tag); //
+		}); // removed the this arg
+	}
+};
+
+videoChange.showTags();
+
+// === in a function
+function playVideo(){
+	console.log(this);
+}
+
+// since functions are objects you can call pproperties
+// changes this to the {name: 'mosh'}
+playVideo.call({ name: 'Mosh'},1,2); // if the function has to parameters
+playVideo.apply({ name: 'Mosh'},[1,2]); // have to pass arguments as array
+playVideo.bind({ name: 'Mosh'})(); // retuns a new function and sets this to point to the new object permanently
+playVideo();
+
+//bind solution
+const videoChange2 = {
+	title: 'a',
+	tags: ['a', 'b', 'c'],
+	showTags() {
+		this.tags.forEach(function(tag) { // can call the forEach because tages is an array
+			console.log(this.title, tag); // inside  the call back function and not a method
+		}.bind(this)); // pass an object to be set to the value of this in the console above. bind(this) refers to the video object
+	}
+};
+
+videoChange2.showTags();
+
+// === arrow function
+// they inhert this from the containing function
+// ES6 and modern approach
+const videoChange3 = {
+	title: 'a',
+	tags: ['a', 'b', 'c'],
+	showTags() {
+		this.tags.forEach(tag => {
+			console.log(this.title, tag); // this is the same this in 1098
+		});
+	}
+};
+
+videoChange3.showTags();
+
+// ========= function exercise
+
+// === sum of arguments
+
+// create a function called sum that takes in a varied number of arguments
+// and returns their sum.
+function sumDot(...args) {
+	return args.reduce((a,b) => a + b);
+}
+//console.log(sumDot(1,2,3,4));
+
+
+// modify the sum function to be able to accept an array and still return
+// the same result using Array.isArray() to tell if it is an array
+function sumDot2(...items) { // rest operator for varied number of parameters
+	if(items.length === 1 && Array.isArray(items[0]))
+		items = [...items[0]]; // spread operator to spread items of 0 which is the array of array
+
+	return items.reduce((a,b) => a + b);
+}
+console.log(sumDot2([1,2,3,4]));
+
+// === Area of Circle
+// create a circle object using object literal syntax
+// radius property can read or write to
+// area property that is read only
+
+const ACircle = {
+	radius: 1,
+	get area(){         // using get for read only
+		return Math.PI * this.radius * this.radius;
+	}
+};
+
+console.log(ACircle.area);
+
+// === Error Handling
+// fix the problem
+// if first argument isnt an array throw an exception
+
+
+
+
+
+function countOccurences2(array, searchElement){
+	if(!Array.isArray(array))
+		throw new Error('not an array')
+
+	return array.reduce((accumalator, currentValue) => {
+		const occurrences = (currentValue === searchElement) ? 1 : 0;
+		console.log(accumalator, currentValue, searchElement);
+		return accumalator + occurrences;
+	},0);
+}
+try {
+	const countNumbers = [1,2,3,4,1];
+	const count2 = countOccurences2(countNumbers, 1); // try catch block
+	console.log(count2);
+}
+catch (e) {
+	console.log(e.message);
+}
